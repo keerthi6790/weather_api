@@ -51,7 +51,7 @@ $(".search-box").keydown(function (e) {
     console.log(a);
     $.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${a}&appid=f2a2f3ef6345388be6f495bd087fbf06`,
-      function (data, status) {
+      function (data, statusCode) {
         $("#place").text(`${data.name},`);
         $("#country").text(`${data.sys.country}`);
         $("#yes_place").text(`${a}`);
@@ -91,6 +91,10 @@ $(".search-box").keydown(function (e) {
           }
         );
       }
-    );
+    ).fail(function (status, error) {
+      if (status.responseJSON.cod == 404) {
+        alert("Enter the Proper Place Name");
+      }
+    });
   }
 });
